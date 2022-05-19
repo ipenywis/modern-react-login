@@ -5,7 +5,7 @@ export const BoxContainer = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
-  margin-top: 10px;
+ // margin-top: 1px;
 `;
 
 export const FormContainer = styled.form`
@@ -50,7 +50,7 @@ export const Input = styled.input`
 
   &:focus {
     outline: none;
-    border-bottom: 2px solid rgb(241, 196, 15);
+    border-bottom: 2px solid rgb(122,158,159);;
   }
 `;
 
@@ -64,13 +64,12 @@ export const SubmitButton = styled.button`
   border-radius: 100px 100px 100px 100px;
   cursor: pointer;
   transition: all, 240ms ease-in-out;
-  background: rgb(241, 196, 15);
-  background: linear-gradient(
-    58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
-  );
-
+  background: #FE5F55;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+ 
   &:hover {
     filter: brightness(1.03);
   }
