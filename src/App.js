@@ -1,6 +1,12 @@
 import "./App.css";
 import styled from "styled-components";
 import { AccountBox } from "./components/accountBox";
+import {
+    BrowserRouter as Router,
+    Switch,
+    Route
+} from "react-router-dom";
+import ReportForm from "./components/accountBox/ReportForm";
 
 const AppContainer = styled.div`
   width: 100%;
@@ -13,9 +19,18 @@ const AppContainer = styled.div`
 
 function App() {
   return (
-    <AppContainer>
-      <AccountBox />
-    </AppContainer>
+   <Router>
+     <Switch>
+       <Route path="/" exact>
+           <AppContainer>
+               <AccountBox />
+           </AppContainer>
+       </Route>
+       <Route path="/report">
+            <ReportForm />
+       </Route>
+     </Switch>
+   </Router>
   );
 }
 

@@ -9,6 +9,7 @@ import {
 } from "./common";
 import { Marginer } from "../marginer";
 import { AccountContext } from "./accountContext";
+import Link from "@material-ui/core/Link";
 
 export function LoginForm(props) {
   const { switchToSignup } = useContext(AccountContext);
@@ -22,7 +23,9 @@ export function LoginForm(props) {
       <Marginer direction="vertical" margin={10} />
       <MutedLink href="#">¿Olvidaste tu contraseña?</MutedLink>
       <Marginer direction="vertical" margin="1.6em" />
-      <SubmitButton type="submit">Ingresar</SubmitButton>
+      <SubmitButton type="submit">
+                <Link className= "linkCSS" href="report" style={{ color: '#FFF' }}>Ingresar</Link>
+      </SubmitButton>
       <Marginer direction="vertical" margin="1em" />
       <MutedLink href="#">
         ¿No tienes una cuenta?{" "}

@@ -1,5 +1,4 @@
-.App {
-  text-align: center;
+.MapPicker {
 }
 
 .App-logo {
@@ -35,4 +34,22 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.leaflet-container {
+  width: 65%;
+  height: 700px;
+  border-radius:19px;
+  margin: 100px;
+  background-color: #EBEBF3;
+  box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
+
+}
+
+h2 {
+  background-color: #fff;
+  font-size: 40px;
+  font-weight: 600;
+  display: flex;
+  padding: 30px 5% ;
 }
