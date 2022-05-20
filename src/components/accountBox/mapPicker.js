@@ -12,9 +12,9 @@ delete L.Icon.Default.prototype._getIconUrl;
 // in CodeSandbox: https://github.com/codesandbox/codesandbox-client/issues/3845
 
 L.Icon.Default.mergeOptions({
-    iconRetinaUrl: require('../../images/marker-icon-2x.png'),
-    iconUrl: require('../../images/marker-icon.png'),
-    shadowUrl: require('../../images/marker-shadow.png')
+    iconRetinaUrl: require('../../images/marker-icon-2x.png').default,
+    iconUrl: require('../../images/marker-icon.png').default,
+    shadowUrl: require('../../images/marker-shadow.png').default
 });
 
 // When importing into your own app outside of CodeSandbox, you can import directly
