@@ -40,6 +40,14 @@ export default function Signup() {
                     {info && <Alert variant="info">Las contraseñas deben tener más de 6 caracteres</Alert>}
                     {error && <Alert variant="danger">{error}</Alert>}
                    <Form onSubmit={handleSubmit}>
+                       <Form.Group id="dni">
+                           <Form.Label>DNI</Form.Label>
+                           <Form.Control type="text" />
+                       </Form.Group>
+                       <Form.Group id="phone">
+                           <Form.Label>Telefono</Form.Label>
+                           <Form.Control type="text" />
+                       </Form.Group>
                        <Form.Group id="email">
                            <Form.Label>Email</Form.Label>
                            <Form.Control type="email" ref={emailRef} required />
