@@ -1,6 +1,4 @@
 import "../App.css";
-import styled from "styled-components";
-import { AccountBox } from "./accountBox";
 import {
     BrowserRouter as Router,
     Switch,
@@ -12,10 +10,15 @@ import Signup from "./Signup";
 import { Container } from 'react-bootstrap';
 import Login from "./Login";
 import ForgotPassword from "./ForgotPassword";
+import {useEffect, useState} from "react";
+import {collection, getDocs} from "@firebase/firestore";
+import {db} from "../firebase";
+import Database from "./database";
 
 
 
 function App() {
+
   return (
               <Container className="d-flex align-items-center justify-content-center"
               style={{ minHeight: "100vh"}}>
@@ -35,6 +38,9 @@ function App() {
                                 </Route>
                                 <Route path="/forgot-password" exact>
                                     <ForgotPassword />
+                                </Route>
+                                <Route path="/database" exact>
+                                    <Database />
                                 </Route>
                             </Switch>
                         </AuthProvider>
