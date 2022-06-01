@@ -113,11 +113,11 @@ function MapPicker() {
        const location = users.map( (user) => {
            let coordinate =  ["Location", user.location.latitude, user.location.longitude]
            console.log(coordinate)
-
+/*
            let locations = [
                ["Locations 1", -31.0002, -61.9929]];
 
-           console.log(locations)
+           console.log(locations)*/
 
 /*              let marker = new L.marker([locations[1], locations[2]])
                    .bindPopup(locations[0])
