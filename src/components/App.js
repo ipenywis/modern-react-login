@@ -14,6 +14,7 @@ import {useEffect, useState} from "react";
 import {collection, getDocs} from "@firebase/firestore";
 import {db} from "../firebase";
 import Database from "./database";
+import MapTest from "./MapTest";
 
 
 
@@ -41,6 +42,9 @@ function App() {
                                 </Route>
                                 <Route path="/database" exact>
                                     <Database />
+                                </Route>
+                                <Route path="/map" exact>
+                                    <MapTest />
                                 </Route>
                             </Switch>
                         </AuthProvider>

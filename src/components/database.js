@@ -7,8 +7,8 @@ export default function Database () {
     const [newName, setNewName] = useState("")
     const [newPhone, setNewPhone] = useState(0)
     const [newAddress, setNewAddress] = useState("")
-  /*  const [newLat, setNewLat] = useState(0)
-    const [newLng, setNewLng] = useState(0)*/
+    const [newLat, setNewLat] = useState(0)
+    const [newLng, setNewLng] = useState(0)
 
     const [users, setUsers] = useState([])
     const usersCollectionRef = collection(db, "users")
@@ -17,6 +17,7 @@ export default function Database () {
         await addDoc(usersCollectionRef, {name: newName,
             phone: newPhone,
             address: newAddress,
+            location: new GeoPoint(newLat, newLng)
     })
     }
 
@@ -32,6 +33,13 @@ export default function Database () {
         };
 
         getUsers();
+
+        const location = users.map((user) => {
+          console.log(["Location", user.location.latitude, user.location.longitude])
+
+        })
+        console.log(location)
+
     }, []);
 
     return (
@@ -55,6 +63,18 @@ export default function Database () {
                     setNewAddress(event.target.value);
                 }}
             />
+            <input
+                placeholder="lat..."
+                onChange={(event) => {
+                    setNewLat(event.target.value);
+                }}
+            />
+            <input
+                placeholder="lng..."
+                onChange={(event) => {
+                    setNewLng(event.target.value);
+                }}
+            />
 
             <button onClick={createUser}>Create User</button>
             {users.map((user) => {
@@ -64,7 +84,7 @@ export default function Database () {
                     <h1>Phone: {user.phone}</h1>
                     <h1>Name: {user.name}</h1>
                     <h1>Address: {user.address}</h1>
-                    <h1>location: {[user.location.latitude, user.location.longitude]}</h1>
+                    <h1>location: {["location", user.location.latitude, user.location.longitude]}</h1>
                   {/*  <h1>lng: {user.location.longitude}</h1>*/}
                 </div>
                 );
