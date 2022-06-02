@@ -1,70 +1,59 @@
-import React, {useEffect, useState} from "react";
-import {addDoc, collection, getDocs} from "@firebase/firestore";
-import {db} from "../firebase";
-import { Map as LeafletMap, TileLayer } from "react-leaflet";
-import "leaflet/dist/leaflet.css";
-import L from 'leaflet';
+import React, { Component } from "react";
+import L from "leaflet";
+import * as ELG from "esri-leaflet-geocoder";
+import { Map, TileLayer } from "react-leaflet";
+import firebase from "firebase/compat";
+import {render} from "@testing-library/react";
 
+// import marker icons
+delete L.Icon.Default.prototype._getIconUrl;
 
-export default function MapTest() {
+L.Icon.Default.mergeOptions({
+    iconRetinaUrl:
+        "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon-2x.png",
+    iconUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-icon.png",
+    shadowUrl: "https://unpkg.com/leaflet@1.4.0/dist/images/marker-shadow.png"
+});
 
-    const map = L.map('map', {
-        center: [51.505, -0.09],
-        zoom: 13,
-        layers: [
-            L.tileLayer("http://{s}.tile.osm.org/{z}/{x}/{y}.png", {
-                attribution:
-                    '&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            })
-        ]
-    });
+class MapComp extends Component {/*
+    componentDidMount() {
+        const map = this.leafletMap.leafletElement;
+        const searchControl = new ELG.Geosearch().addTo(map);
+        const results = new L.LayerGroup().addTo(map);
 
-    L.marker([50.5, 30.5]).addTo(map);
+        searchControl.on("results", function(data) {
+            results.clearLayers();
+            for (let i = data.results.length - 1; i >= 0; i--) {
+                results.addLayer(L.marker(data.results[i].latlng));
+            }
+        });
 
-    const [newName, setNewName] = useState("")
-    const [newPhone, setNewPhone] = useState(0)
-    const [newAddress, setNewAddress] = useState("")
-    /*  const [newLat, setNewLat] = useState(0)
-      const [newLng, setNewLng] = useState(0)*/
+        const usersRef = firebase.database().ref('users')
+        usersRef.on('value', (snapshot) => {
+            setData({...snapshot.val()})
 
-    const [users, setUsers] = useState([])
-    const usersCollectionRef = collection(db, "users")
-
-    const createUser = async () => {
-        await addDoc(usersCollectionRef, {name: newName,
-            phone: newPhone,
-            address: newAddress,
-        })
+            console.log(data)
     }
 
-    useEffect(() => {   //es mala practica hacer a un hook async, por eso creamos una funcion dentro del hook y esa es async
-
-        const getUsers = async () => {
-            const data = await getDocs(usersCollectionRef);
-            setUsers(data.docs.map((doc) => ({...doc.data(),
-                id: doc.id
-            })))
-            //en la linea de arriba estamos recorriendo la coleccion y guardanco cada dato del documento en un array y tambien
-            //trayendo el id de cada documento
-        };
-
-        getUsers();
-    }, []);
-
-    return (
-        <div div id="map"></div>
-  /*      <LeafletMap center={position} zoom={13} style={{ height: "100vh" }}>
-            <TileLayer
-                url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-                attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
-            />
-            <Marker
-                position={users.map((user) => {
-                        return user.location.latitude, user.location.longitude
-
-                    })}
-                icon={icon}
+    render() {
+        const center = [37.7833, -122.4167];
+        return (
+            <Map
+                style={{ height: "100vh" }}
+                center={center}
+                zoom="10"
+                ref={m => {
+                    this.leafletMap = m;
+                }}
+            >
+                <TileLayer
+                    attribution="&copy; <a href='https://osm.org/copyright'>OpenStreetMap</a> contributors"
+                    url={"http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"}
                 />
-        </LeafletMap>*/
-    )
+                <div className="pointer" />
+            </Map>
+        );
+    }*/
 }
+
+export default MapComp;

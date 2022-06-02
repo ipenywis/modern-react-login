@@ -1,5 +1,4 @@
 import React, {Component, useState} from "react";
-import mapPicker from "../accountBox/mapPicker"
 import MapPicker from "../accountBox/mapPicker";
 
 

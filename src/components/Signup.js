@@ -1,9 +1,10 @@
-import React, {useRef, useState} from "react";
+import React, {useEffect, useRef, useState} from "react";
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth} from "../contexts/AuthContext";
 import { Link, useHistory } from 'react-router-dom';
 import {addDoc, collection, GeoPoint} from "@firebase/firestore";
 import {db} from "../firebase";
+import firebase from "firebase/compat";
 
 export default function Signup() {
     const emailRef = useRef()
@@ -22,14 +23,27 @@ export default function Signup() {
     const [users, setUsers] = useState([])
     const usersCollectionRef = collection(db, "registeredUsers")
 
-    const createUser = async () => {
+    const createRegisteredUsers = () =>{
+        const registeredUsersRef = firebase.database().ref('registeredUsers/')
+        const regisUsers = {
+            dni: newDni,
+            phone_number: newPhone,
+            name: newName
+        };
+        registeredUsersRef.push(regisUsers);
+
+    }
+
+
+
+    /*const createUser = async () => {
         await addDoc(usersCollectionRef, {dni: newDni,
             phone_number: newPhone,
             name: newName
 
         })
     }
-
+*/
 
     async function handleSubmit(e) {
         e.preventDefault() //prevent our form to refresh
@@ -88,7 +102,7 @@ export default function Signup() {
                            <Form.Label>Confirmar contraseña</Form.Label>
                            <Form.Control type="password" ref={passwordConfirmRef} required />
                        </Form.Group>
-                       <Button disabled={loading} className="w-100" type="submit" onClick={createUser}>
+                       <Button disabled={loading} className="w-100" type="submit" onClick={createRegisteredUsers}>
                            Registrarse
                        </Button>
                    </Form>

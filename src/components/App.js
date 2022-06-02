@@ -16,6 +16,7 @@ import {db} from "../firebase";
 import Database from "./database";
 import MapTest from "./MapTest";
 import Register from "./Register"
+import MapComp from "./MapTest";
 
 
 
@@ -45,7 +46,7 @@ function App() {
                                     <Database />
                                 </Route>
                                 <Route path="/map" exact>
-                                    <MapTest />
+                                    <MapComp />
                                 </Route>
                                 <Route path="/register" exact>
                                     <Register />

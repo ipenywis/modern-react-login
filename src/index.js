@@ -6,6 +6,11 @@ import App from './components/App';
 import reportWebVitals from './reportWebVitals';
 import "bootstrap/dist/css/bootstrap.min.css"
 
+import "leaflet/dist/leaflet.css";
+import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.css";
+
+import "leaflet/dist/leaflet.js";
+import "esri-leaflet-geocoder/dist/esri-leaflet-geocoder.js";
 
 ReactDOM.render(
   <React.StrictMode>

@@ -50,48 +50,9 @@ export default function Register() {
             setUsersList(usersList)
         })
 
-/*
 
-        let locations = []
-        {usersList ? usersList.map(  (userVal) => {
-            locations.push([userVal.address.lat, userVal.address.lon])
-
-            /!*      let marker = new L.marker([locations[1], locations[2]])
-                           .bindPopup(locations[0])
-                           .addTo(map)*!/
-
-        })}
-
-        for (let i = 0; i < locations.length; i++) {
-            new L.marker([locations[i][1], locations[i][2]])
-                .bindPopup(locations[i][0])
-                .addTo(map)
-
-            console.log('kasemaster')
-        }
-
-*/
-
-  /*      let usuario = []
-        {usersList ? usersList.map((userVal) => {
-          usuario.push([userVal.address.array])
-            console.log(userVal)
-        }
-        ):''}
-         console.log(usuario)*/
     }, [])
 
-
-/*
-    function writeUserData() {
-        const db = getDatabase();
-        set(ref(db, 'registeredUsers/'), {
-            dni: newDni,
-            phone_number: newPhone,
-            name : newName
-        });
-    }
-*/
 
 
     return (

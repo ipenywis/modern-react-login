@@ -1,6 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import L from 'leaflet';
-import { Map, TileLayer, Marker } from 'react-leaflet';
+import { Map, TileLayer, Marker, Popup } from 'react-leaflet';
 import '../../App.css';
 import 'leaflet/dist/leaflet.css';
 
@@ -8,38 +8,33 @@ import denuncias from '../../denuncias.json';
 import {addDoc, collection, GeoPoint, getDocs} from "@firebase/firestore";
 import {db} from "../../firebase";
 import firebase from "firebase/compat";
+import * as ELG from "esri-leaflet-geocoder";
+import {Button} from "bootstrap";
+import Link from "@material-ui/core/Link";
 
-delete L.Icon.Default.prototype._getIconUrl;
+//delete L.Icon.Default.prototype._getIconUrl;
 
 
+/*
 L.Icon.Default.mergeOptions({
     iconRetinaUrl: require('../../images/marker-icon-2x.png').default,
     iconUrl: require('../../images/marker-icon.png').default,
     shadowUrl: require('../../images/marker-shadow.png').default
 });
+*/
 
 
 
 function MapPicker() {
 
-
-    const [users, setUsers] = useState([])
-    const usersCollectionRef = collection(db, "users") //referencia a la bd
-    const [newDni, setNewDni] = useState("")
-    const [newName, setNewName] = useState("")
-    const [newPhone, setNewPhone] = useState("")
-    const [usersList, setUsersList] = useState()
-    const [content, setContent] = useState([]);
+    const [storeData, setStoreData] = useState([]);
 
 
 
 
 
     const mapRef = useRef();
-/*    const locations = [users.map((user) => {
-        return [user.location.latitude, user.location.longitude]
-    })
-    ]*/
+
     useEffect(() => {
         const { current = {} } = mapRef;
         const { leafletElement: map } = current;
@@ -48,16 +43,6 @@ function MapPicker() {
 
 
 
-       /*const parksGeoJson = new L.GeoJSON(denuncias).addTo(map), {
-            onEachFeature: (feature = {}, layer) => {
-                const { properties = {} } = feature;
-                const { Name } = properties;
-
-                if ( !Name ) return;
-
-                layer.bindPopup(`<p>${Name}</p>`);
-            }
-        });*/
 
       //  L.marker([50.5, 30.5], []).addTo(map);
 /*        export function createMarker(latitude,longitude,popupContent){
@@ -66,7 +51,7 @@ function MapPicker() {
                 .bindPopup(popupContent);
         }*/
 
-        const getUsers = async () => {
+/*        const getUsers = async () => {
             const data = await getDocs(usersCollectionRef);
             setUsers(data.docs.map((doc) => ({...doc.data()
             })))
@@ -74,94 +59,182 @@ function MapPicker() {
             //trayendo el id de cada documento
         };
 
-       getUsers();
+       getUsers();*/
 
 
-       const usersList = []
+       //const usersList = []
 
-           const usersRef = firebase.database().ref('users')
+
+      /*     const usersRef = firebase.database().ref('users')
            usersRef.on('value', (snapshot) => {
-               const usersVal = snapshot.val()
+               setData({...snapshot.val()})
+
+               console.log(data)
+
+               /!*const usersVal = snapshot.val()
                for (let id in usersVal) {
                    usersList.push(usersVal[id])
-
+*!/
                }
-               setUsersList(usersList)
-           })
+            )*/
+       /*    {
+               try {
+                   Object.keys(data).map((id, index) => {
+                       console.log(data[id].img)
+                       locations.push([data[id].issue, data[id].address.lat, data[id].address.lon, data[id].img])
+                       console.log(locations)
 
-        console.log(usersList)
+                       for (let i = 0; i < locations.length ;i++) {
+                           new L.marker([locations[i][1], locations[i][2]])
+                               .bindPopup("<img src = ' " + locations[i][3] + "' />" + locations[i][0])
+                               .addTo(map)
+
+                       }
+                       /!*        let markers = []
+           locations.forEach((element, i) => {
+               markers[i] = L.marker([element[1], element[2]]).addTo(map)
+                   .bindPopup("<img src = ' " + element[3] + "' />" + element[0])
+           })*!/
+                   })
+               } catch (err) {
+                   console.log(err)
+               }
+           }
+*/
 
 
-        {
-            let locations = []
-            {
-                if (usersList) {
-                    usersList.map((userVal) => {
-                        console.log(userVal)
-                        locations.push([userVal.issue, userVal.address.lat, userVal.address.lon, userVal.img])
-                    })
 
-                    /*   (async () => {
-                           setContent(await getContentData())
-                       }) ();*/
 
-                    console.log(locations)
 
-                } else {
-                    return ('')
-                }
-            }
 
-            console.log(locations)
-            for (let i = 0; i < locations.length; i++) {
-                new L.marker([locations[i][1], locations[i][2]])
-                    .bindPopup("<img src = ' " + locations[i][3] + "' />" + locations[i][0])
-                    .addTo(map)
-                console.log(locations[i][3])
+                    /*      console.log(locations[i][3])
+
+                  })}
+
+                 // console.log(usersList)
+
+
+                 /* {
+                      let locations = []
+                      {
+                          if (usersList) {
+                              usersList.map((userVal) => {
+                                  console.log(userVal)
+                                  locations.push([userVal.issue, userVal.address.lat, userVal.address.lon, userVal.img])
+                              })
+
+                              /!*   (async () => {
+                                     setContent(await getContentData())
+                                 }) ();*!/
+
+                              console.log(locations)
+
+                          } else {
+                              return ('')
+                          }
+                      }
+
+                      console.log(locations)
+                      for (let i = 0; i < locations.length; i++) {*/
+                /*new L.marker([34.07381780761041, -118.44177995896911])
+                   /!* .bindPopup("<img src = ' " + locations[i][3] + "' />" + locations[i][0])*!/
+                    .addTo(map)*/
+          /*      console.log(locations[i][3])
 
                 console.log('kasemaster')
             }
         }
-
-        function createMarker(latitude,longitude,popupContent){
-            L.marker([latitude,longitude]).addTo(map)
-                .bindPopup(popupContent);
-        }
-
-        createMarker(34.07381780761041, -118.44177995896911,"This was a marker made from our function!")
-        createMarker(34.0211224,-118.3964665,"Back to Culver City!")
-
-
-/*
-           let locations = [
-        ["Locations 1", 6.625117, 39.145004],
-        ["Locations 2", -6.5767859, 39.1304557],
-        ["Locations 3", -6.8667841, 39.2530337],
-        ["Locations 4", -6.7787336, 39.2273218],
-        ["Locations 5", -6.7576158, 39.2768276],
-    ];
-
-
-
 */
 
 
+
+
+    }, [])
+
+    useEffect(() => {
+        const fetchData = () => {
+            let tmp = []
+            const usersRef = firebase.database().ref('users')
+            usersRef.on('value', (snapshot) => {
+                    snapshot.forEach(doc => {
+                        tmp.push(doc.val())
+                    })
+                setStoreData(tmp);
+                   /* setLocations(locations)
+                    console.log(locations)*/
+
+                    /*const usersVal = snapshot.val()
+                    for (let id in usersVal) {
+                        usersList.push(usersVal[id])
+     */
+                })
+        }
+        fetchData()
 
     }, [])
 
 
     return (
         <div>
+
             <div className="MapPicker">
                 <Map ref={mapRef} center={[-31.4167, -64.18]} zoom={13}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
+                    {
+                        storeData.map(x => {
+                            console.log([x.issue, x.address.lat, x.address.lon, x.img])
+                            if (!x.img){
+                            return (
+                                <Marker position={[x.address.lat, x.address.lon]}>
+                                    <Popup>
+                                        <p>{x.issue}</p>
+                                    </Popup>
+                                </Marker>
+
+                        )} else {
+                                return (
+                                    <Marker position={[x.address.lat, x.address.lon]}>
+                                        <Popup>
+                                            <h5>{x.issue}</h5>
+                                            <img
+                                                src={x.img}
+                                                width="150px"
+                                                height="150px"
+                                            />
+                                        </Popup>
+                                    </Marker>
+                                )
+                            }
+                        })
+                    }
+
                 </Map>
-                {JSON.stringify(usersList)}
+            </div>
+            <div style={{  marginTop: "-170%",
+                marginLeft: "-110%", borderRadius:"19px",
+                boxShadow: "0 0 2px rgba(15, 15, 15, 0.28)", background:"#EBEBF3",  padding: "30px 5% "}}>
+
+                <p style={{
+                    fontWeight: "900", fontSize: "20px"}}>Denuncias</p>
+                {
+                    storeData.map(x => {
+                        return (
+                            <div>
+
+                                    <ul style={{  textAlign:"left"}}>
+                                        <li >
+                                            {x.issue}<br/>
+                                        </li>
+                                    </ul>
+
+                            </div>
+                        )
+                    })
+                }
             </div>
         </div>
     );
 }
-
 
 
 export default MapPicker;
