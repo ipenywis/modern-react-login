@@ -15,6 +15,7 @@ import {collection, getDocs} from "@firebase/firestore";
 import {db} from "../firebase";
 import Database from "./database";
 import MapTest from "./MapTest";
+import Register from "./Register"
 
 
 
@@ -45,6 +46,9 @@ function App() {
                                 </Route>
                                 <Route path="/map" exact>
                                     <MapTest />
+                                </Route>
+                                <Route path="/register" exact>
+                                    <Register />
                                 </Route>
                             </Switch>
                         </AuthProvider>

@@ -22,7 +22,7 @@ export default function Login() {
             history.push("/report")
         } catch(error) {
             console.log(error)
-            setError('Hubo un fallo al iniciar sesión')
+            setError('El email o la contraseña no es correcta')
         }
         setLoading(false)
 

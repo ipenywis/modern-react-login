@@ -7,6 +7,7 @@ import 'leaflet/dist/leaflet.css';
 import denuncias from '../../denuncias.json';
 import {addDoc, collection, GeoPoint, getDocs} from "@firebase/firestore";
 import {db} from "../../firebase";
+import firebase from "firebase/compat";
 
 delete L.Icon.Default.prototype._getIconUrl;
 
@@ -21,52 +22,17 @@ L.Icon.Default.mergeOptions({
 
 function MapPicker() {
 
-/*
-    let locations = [{
-        "type": "Feature",
-        "id": 3,
-        "properties": {
-            "Name": "Brasil decime que se siente"
-        },
-        "geometry": {
-            "type": "Point",
-            "coordinates":
-        }
-    }]
-*/
-
-
-    const [newName, setNewName] = useState("")
-    const [newPhone, setNewPhone] = useState(0)
-    const [newAddress, setNewAddress] = useState("")
-    const [newLat, setNewLat] = useState(0)
-    const [newLng, setNewLng] = useState(0)
-    const[newCoordinates, setNewCoordinates] = useState([])
 
     const [users, setUsers] = useState([])
-    const usersCollectionRef = collection(db, "users")
+    const usersCollectionRef = collection(db, "users") //referencia a la bd
+    const [newDni, setNewDni] = useState("")
+    const [newName, setNewName] = useState("")
+    const [newPhone, setNewPhone] = useState("")
+    const [usersList, setUsersList] = useState()
+    const [content, setContent] = useState([]);
 
-    const createUser = async () => {
-        await addDoc(usersCollectionRef, {name: newName,
-            phone: newPhone,
-            address: newAddress,
-            location: new GeoPoint(newLat, newLng)
-        })
-    }
 
-    useEffect(() => {   //es mala practica hacer a un hook async, por eso creamos una funcion dentro del hook y esa es async
 
-        const getUsers = async () => {
-            const data = await getDocs(usersCollectionRef);
-            setUsers(data.docs.map((doc) => ({...doc.data(),
-                id: doc.id
-            })))
-            //en la linea de arriba estamos recorriendo la coleccion y guardanco cada dato del documento en un array y tambien
-            //trayendo el id de cada documento
-        };
-
-        getUsers();
-    }, []);
 
 
     const mapRef = useRef();
@@ -79,6 +45,7 @@ function MapPicker() {
         const { leafletElement: map } = current;
 
         if ( !map ) return;
+
 
 
        /*const parksGeoJson = new L.GeoJSON(denuncias).addTo(map), {
@@ -101,31 +68,68 @@ function MapPicker() {
 
         const getUsers = async () => {
             const data = await getDocs(usersCollectionRef);
-            setUsers(data.docs.map((doc) => ({...doc.data(),
-                id: doc.id
+            setUsers(data.docs.map((doc) => ({...doc.data()
             })))
             //en la linea de arriba estamos recorriendo la coleccion y guardanco cada dato del documento en un array y tambien
             //trayendo el id de cada documento
         };
 
-        getUsers();
-
-       const location = users.map( (user) => {
-           let coordinate =  ["Location", user.location.latitude, user.location.longitude]
-           console.log(coordinate)
-/*
-           let locations = [
-               ["Locations 1", -31.0002, -61.9929]];
-
-           console.log(locations)*/
-
-/*              let marker = new L.marker([locations[1], locations[2]])
-                   .bindPopup(locations[0])
-                   .addTo(map)*/
-
-        })
+       getUsers();
 
 
+       const usersList = []
+
+           const usersRef = firebase.database().ref('users')
+           usersRef.on('value', (snapshot) => {
+               const usersVal = snapshot.val()
+               for (let id in usersVal) {
+                   usersList.push(usersVal[id])
+
+               }
+               setUsersList(usersList)
+           })
+
+        console.log(usersList)
+
+
+        {
+            let locations = []
+            {
+                if (usersList) {
+                    usersList.map((userVal) => {
+                        console.log(userVal)
+                        locations.push([userVal.issue, userVal.address.lat, userVal.address.lon, userVal.img])
+                    })
+
+                    /*   (async () => {
+                           setContent(await getContentData())
+                       }) ();*/
+
+                    console.log(locations)
+
+                } else {
+                    return ('')
+                }
+            }
+
+            console.log(locations)
+            for (let i = 0; i < locations.length; i++) {
+                new L.marker([locations[i][1], locations[i][2]])
+                    .bindPopup("<img src = ' " + locations[i][3] + "' />" + locations[i][0])
+                    .addTo(map)
+                console.log(locations[i][3])
+
+                console.log('kasemaster')
+            }
+        }
+
+        function createMarker(latitude,longitude,popupContent){
+            L.marker([latitude,longitude]).addTo(map)
+                .bindPopup(popupContent);
+        }
+
+        createMarker(34.07381780761041, -118.44177995896911,"This was a marker made from our function!")
+        createMarker(34.0211224,-118.3964665,"Back to Culver City!")
 
 
 /*
@@ -136,24 +140,25 @@ function MapPicker() {
         ["Locations 4", -6.7787336, 39.2273218],
         ["Locations 5", -6.7576158, 39.2768276],
     ];
-                 for (let i = 0; i < locations.length; i++) {
-                      new L.marker([locations[i][1], locations[i][2]])
-                           .bindPopup(locations[i][0])
-                           .addTo(map)
-                   }
+
+
 
 */
+
+
 
     }, [])
 
 
     return (
+        <div>
             <div className="MapPicker">
                 <Map ref={mapRef} center={[-31.4167, -64.18]} zoom={13}>
                     <TileLayer url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" attribution="&copy; <a href=&quot;https://www.openstreetmap.org/copyright&quot;>OpenStreetMap</a> contributors" />
                 </Map>
-                {JSON.stringify(users)}
+                {JSON.stringify(usersList)}
             </div>
+        </div>
     );
 }
 

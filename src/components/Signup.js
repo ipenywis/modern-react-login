@@ -2,6 +2,8 @@ import React, {useRef, useState} from "react";
 import { Form, Button, Card, Alert } from 'react-bootstrap'
 import {useAuth} from "../contexts/AuthContext";
 import { Link, useHistory } from 'react-router-dom';
+import {addDoc, collection, GeoPoint} from "@firebase/firestore";
+import {db} from "../firebase";
 
 export default function Signup() {
     const emailRef = useRef()
@@ -12,6 +14,22 @@ export default function Signup() {
     const [info, setInfo] = useState(true)
     const [loading, setLoading] = useState(false) //como estado inicial no estamos cargando nada
     const history = useHistory()
+
+    const [newDni, setNewDni] = useState("")
+    const [newName, setNewName] = useState("")
+    const [newPhone, setNewPhone] = useState("")
+
+    const [users, setUsers] = useState([])
+    const usersCollectionRef = collection(db, "registeredUsers")
+
+    const createUser = async () => {
+        await addDoc(usersCollectionRef, {dni: newDni,
+            phone_number: newPhone,
+            name: newName
+
+        })
+    }
+
 
     async function handleSubmit(e) {
         e.preventDefault() //prevent our form to refresh
@@ -27,7 +45,7 @@ export default function Signup() {
             await signup(emailRef.current.value, passwordRef.current.value)
         } catch(error) {
             console.log(error)
-            return [setError('Hubo un fallo al crear la cuenta'), setInfo(false)]
+            return [setError('La cuenta que intenta crear ya existe'), setInfo(false)]
         }
         setLoading(false)
 
@@ -42,11 +60,21 @@ export default function Signup() {
                    <Form onSubmit={handleSubmit}>
                        <Form.Group id="dni">
                            <Form.Label>DNI</Form.Label>
-                           <Form.Control type="text" />
+                           <Form.Control type="text" onChange={(event) => {
+                               setNewDni(event.target.value);
+                           }}/>
                        </Form.Group>
-                       <Form.Group id="phone">
-                           <Form.Label>Telefono</Form.Label>
-                           <Form.Control type="text" />
+                       <Form.Group id="phone" >
+                           <Form.Label>Número de teléfono</Form.Label>
+                           <Form.Control type="text" onChange={(event) => {
+                               setNewPhone(event.target.value);
+                           }}/>
+                       </Form.Group>
+                       <Form.Group id="name" >
+                           <Form.Label>Nombre</Form.Label>
+                           <Form.Control type="text" onChange={(event) => {
+                               setNewName(event.target.value);
+                           }}/>
                        </Form.Group>
                        <Form.Group id="email">
                            <Form.Label>Email</Form.Label>
@@ -60,7 +88,7 @@ export default function Signup() {
                            <Form.Label>Confirmar contraseña</Form.Label>
                            <Form.Control type="password" ref={passwordConfirmRef} required />
                        </Form.Group>
-                       <Button disabled={loading} className="w-100" type="submit">
+                       <Button disabled={loading} className="w-100" type="submit" onClick={createUser}>
                            Registrarse
                        </Button>
                    </Form>
