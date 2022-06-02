@@ -1,0 +1,25 @@
+{
+  "type": "FeatureCollection",
+  "features": [{
+    "type": "Feature",
+    "id": 0,
+    "properties": {
+      "Name": "Brasil 886- marker"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-64.201000, -31.425000]
+    }
+  }, {
+    "type": "Feature",
+    "id": 1,
+    "properties": {
+      "Name": "Gloria Dei Church National Historic Site"
+    },
+    "geometry": {
+      "type": "Point",
+      "coordinates": [-75.143583605984745, 39.934377409572079]
+    }
+  }
+  ]
+}

@@ -5,6 +5,8 @@ import { motion } from "framer-motion";
 import { AccountContext } from "./accountContext";
 import { SignupForm } from "./signupForm";
 
+
+
 const BoxContainer = styled.div`
   width: 280px;
   min-height: 550px;
@@ -37,11 +39,8 @@ const BackDrop = styled(motion.div)`
   transform: rotate(60deg);
   top: -290px;
   left: -70px;
-  background: rgb(241, 196, 15);
-  background: linear-gradient(
-    58deg,
-    rgba(241, 196, 15, 1) 20%,
-    rgba(243, 172, 18, 1) 100%
+  background: rgb(122,158,159);
+  background: linear-gradient(90deg, rgba(122,158,159,1) 0%, rgba(253,29,29,0.4417344173441734) 50%, rgba(227,227,172,1) 100%);
   );
 `;
 
@@ -52,12 +51,13 @@ const HeaderContainer = styled.div`
 `;
 
 const HeaderText = styled.h2`
-  font-size: 30px;
+  font-size: 36px;
   font-weight: 600;
-  line-height: 1.24;
+  line-height: 2.60;
   color: #fff;
   z-index: 10;
   margin: 0;
+
 `;
 
 const SmallText = styled.h5`
@@ -136,16 +136,12 @@ export function AccountBox(props) {
           />
           {active === "signin" && (
             <HeaderContainer>
-              <HeaderText>Welcome</HeaderText>
-              <HeaderText>Back</HeaderText>
-              <SmallText>Please sign-in to continue!</SmallText>
+              <HeaderText>Segurita</HeaderText>
             </HeaderContainer>
           )}
           {active === "signup" && (
             <HeaderContainer>
-              <HeaderText>Create</HeaderText>
-              <HeaderText>Account</HeaderText>
-              <SmallText>Please sign-up to continue!</SmallText>
+              <HeaderText>Registrarse</HeaderText>
             </HeaderContainer>
           )}
         </TopContainer>

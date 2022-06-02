@@ -1,5 +1,5 @@
-.App {
-  text-align: center;
+.MapPicker {
+
 }
 
 .App-logo {
@@ -16,10 +16,6 @@
 .App-header {
   background-color: #282c34;
   min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   font-size: calc(10px + 2vmin);
   color: white;
 }
@@ -36,3 +32,28 @@
     transform: rotate(360deg);
   }
 }
+
+.leaflet-container {
+  width: 670px;
+  height:700px;
+  border-radius:19px;
+  box-shadow: 0 0 2px rgba(15, 15, 15, 0.28);
+  padding-right: 550px;
+  margin-left: -28.33%;
+  margin-right: -33.33%;
+
+
+}
+
+.headerLogo {
+  background-color: #085E41;
+  color: white;
+  font-size: 40px;
+  font-weight: 600;
+  padding: 30px 5% ;
+  margin-left: -28.33%;
+  margin-right: -33.33%;
+  margin-top: -110.33%;
+}
+
+
